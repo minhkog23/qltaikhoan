@@ -3,11 +3,13 @@ class quanly
 {
     public function connect()
     {
-        $con = mysqli_connect("localhost", "root", "", "quanlytaikhoan");
-        if (!$con) {
-            echo "Kết nối thất bại";
+        // Đường dẫn tuyệt đối để tránh lỗi khi include từ nhiều vị trí khác nhau
+        include_once __DIR__ . '/../config.php';
+        $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        if ($con->connect_error) {
+            die("Kết nối thất bại: " . $con->connect_error);
         } else {
-            mysqli_set_charset($con, 'utf8');
+            $con->set_charset("utf8");
             return $con;
         }
     }

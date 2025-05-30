@@ -10,6 +10,11 @@ if (isset($_SESSION['email']) && isset($_SESSION['matKhau'])) {
 }
 ?>
 <?php
+    if(filter_var($_REQUEST['id_maTK'], FILTER_VALIDATE_INT) === false) {
+        header("location:quanLyDanhMuc.php");
+    }
+?>
+<?php
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -24,7 +29,7 @@ $p = new xuLyDuLieu();
 // giải mã url để lấy id_maTK
 // $encoded_id = $_REQUEST['id_maTK'];
 //$id_maTK = base64_decode($encoded_id);
-$id_maTK = $_REQUEST['id_maTK'];
+$id_maTK = intval($_REQUEST['id_maTK']);
 $tenloaiTK = $p->laycot("SELECT tenLoai FROM loaitaikhoan WHERE id_maTK=?", [$id_maTK]);
 $moTa = $p->laycot("SELECT moTa FROM loaitaikhoan WHERE id_maTK=?", [$id_maTK]);
 
@@ -70,6 +75,7 @@ $moTa = $p->laycot("SELECT moTa FROM loaitaikhoan WHERE id_maTK=?", [$id_maTK]);
                 <div style="display: flex; margin-top: 30px; justify-content: center; gap: 20px;">
                     <a class="btn btn-danger" style="padding: 10px 20px;" href="quanLyDanhMuc.php">Hủy</a>
                     <input type="hidden" name="token" value="<?php echo $token; ?>">
+                    <input type="reset" value="Nhập lại" class="btn btn-warning"></input>
                     <input type="submit" name="nut" value="Lưu" style="padding: 10px 20px;" class="btn btn-primary"></input>
                 </div>
 
@@ -92,7 +98,7 @@ $moTa = $p->laycot("SELECT moTa FROM loaitaikhoan WHERE id_maTK=?", [$id_maTK]);
                             });
                             setTimeout(function() {
                                 window.location.href = "quanLyDanhMuc.php";
-                            }, 2000);
+                            }, 1500);
                         </script>';
                             unset($_SESSION['token']);
                         } else {

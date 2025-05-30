@@ -15,6 +15,13 @@
     }
 ?>
 <?php
+    if(filter_var($_REQUEST['id_taiKhoan'], FILTER_VALIDATE_INT) === false) {
+        // Nếu id_taiKhoan không phải là một số nguyên hợp lệ, xử lý lỗi hoặc gán giá trị mặc định
+        header("location: index.php");
+    }
+
+?>
+<?php
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
@@ -29,7 +36,7 @@ $token = $_SESSION['token'];
     // giải hóa url để lấy id_taiKhoan
     // $encoded_id=$_REQUEST['id_taiKhoan'];
     // $id_taiKhoan=base64_decode($encoded_id);
-    $id_taiKhoan=$_REQUEST['id_taiKhoan'];
+    $id_taiKhoan=intval($_REQUEST['id_taiKhoan']);
     $id_user=$_SESSION['id_user'];
     $id_maTK=$p->laycot("SELECT id_maTK FROM taikhoan where id_taiKhoan= $id_taiKhoan and id_user= $id_user");
     $taikhoan=$p->laycot("SELECT taiKhoan FROM taikhoan where id_taiKhoan=? and id_user=?",[$id_taiKhoan,$id_user]);
@@ -93,6 +100,7 @@ $token = $_SESSION['token'];
         <div style="display: flex; margin-top: 30px; justify-content: center; gap: 20px;">
             <a class="btn btn-danger" style="padding: 10px 20px;" href="index.php">Hủy</a>
             <input type="hidden" name="token" value="<?php echo $token; ?>">
+            <input type="reset" value="Nhập lại" class="btn btn-warning"></input>
             <input type="submit" name="nut" value="Lưu" style="padding: 10px 20px;" class="btn btn-primary"></input>
         </div>
         

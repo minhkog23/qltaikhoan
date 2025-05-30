@@ -170,7 +170,7 @@ $token = $_SESSION['token'];
               </div>
               <div class="form-group col-md-3">
                 <label class="control-label">Mật khẩu <span style="color:red">*</span></label>
-                <input class="form-control" type="text" name="txtpass" id="txtpass" placeholder="Nhập mật khẩu">
+                <input class="form-control" type="text" name="txtpass" id="txtpass" placeholder="Nhập mật khẩu" required>
               </div>
 
               <div class="form-group col-md-3 ">
@@ -193,6 +193,7 @@ $token = $_SESSION['token'];
               <div class="form-group col-md-12" align="center">
                 <a class="btn btn-cancel" href="index.php">Hủy</a>
                 <input type="hidden" name="token" value="<?php echo $token; ?>">
+                <input type="reset" value="Nhập lại" class="btn btn-warning"></input>
                 <input class="btn btn-save" name="nut" value="Lưu"  type="submit"></input>
               </div>
               <?php
@@ -226,7 +227,7 @@ $token = $_SESSION['token'];
                           });
                           SetTimeout(function() {
                             window.location.href = "index.php";
-                          }, 2000);
+                          }, 1500);
                       </script>';
                       unset($_SESSION['token']);
                     }

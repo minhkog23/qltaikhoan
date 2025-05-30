@@ -176,6 +176,7 @@ $token = $_SESSION['token'];
               <div class="form-group col-md-12" align="center">
                 <a class="btn btn-cancel" href="quanLyDanhMuc.php">Hủy</a>
                 <input type="hidden" name="token" value="<?php echo $token; ?>">
+                <input type="reset" value="Nhập lại" class="btn btn-warning"></input>
                 <input class="btn btn-save" name="nut" value="Lưu"  type="submit"></input>
               </div>
 
@@ -210,7 +211,7 @@ $token = $_SESSION['token'];
                               });
                               setTimeout(function() {
                                   window.location.href = "quanLyDanhMuc.php";
-                              }, 2000);
+                              }, 1500);
                           </script>';
                           unset($_SESSION['token']);
                     }

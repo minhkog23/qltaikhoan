@@ -3,7 +3,8 @@ class login
 {
     public function connectlogin()
     {
-        $con = mysqli_connect("localhost", "root", "", "quanlytaikhoan");
+        include_once __DIR__ . '/../../config.php';
+        $con = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         if (!$con) {
             echo "Kết nối thất bại";
             exit();

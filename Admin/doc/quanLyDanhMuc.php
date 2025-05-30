@@ -48,7 +48,7 @@
 
 
       <!-- User Menu-->
-      <li><a class="app-nav__item" href="/index.html"><i class='bx bx-log-out bx-rotate-180'></i> </a>
+      <li><a class="app-nav__item" href="../../class/logout/"><i class='bx bx-log-out bx-rotate-180'></i> </a>
 
       </li>
     </ul>
@@ -93,7 +93,7 @@
                 
               </div>
               <?php
-                $p->getDanhMuc("SELECT * FROM loaitaikhoan");
+                $p->getDanhMuc("SELECT * FROM loaitaikhoan order by id_maTK desc");
                 // xóa
                 if(isset($_POST['nut']) && $_POST['nut']=="Xóa")
                 {
@@ -106,7 +106,7 @@
                               });
                               setTimeout(function() {
                               window.location="quanLyDanhMuc.php";
-                              }, 2000);
+                              }, 1500);
                           ;</script>';
                   }
                   else

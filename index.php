@@ -40,7 +40,7 @@ $token = $_SESSION['token'];
             <div class="input-boxes">
               <div class="input-box">
                 <i class="fas fa-envelope"></i>
-                <input type="email" name="txtemail" id="txtemail" style="width: 350px;" placeholder="Nhập email của bạn" required>
+                <input type="email" name="txtemail" id="txtemail" style="width: 320px;" placeholder="Nhập email của bạn" required>
               </div>
               <div class="input-box">
                 <i class="fas fa-lock"></i>
@@ -78,7 +78,7 @@ $token = $_SESSION['token'];
                                     });
                                     setTimeout(function() {
                                       window.location.href = "Admin/doc/index.php";
-                                    }, 2000);
+                                    }, 1500);
                                   </script>';
                     unset($_SESSION['token']);
                   } else {
@@ -91,9 +91,7 @@ $token = $_SESSION['token'];
                       echo "<script>swal('Thất bại','Tên đăng nhập hoặc mật khẩu sai. Bạn còn " . ($max_temp - $_SESSION['login_attempts'][$user]) . " lần thử.','error');</script>";
                     }
                   }
-                }
-                else
-                {
+                } else {
                   echo '<script>swal("Thất bại","Tài khoản không tồn tại !!!","error");</script>';
                 }
               } else {

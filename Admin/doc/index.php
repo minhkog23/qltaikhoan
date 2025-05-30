@@ -115,6 +115,9 @@
                                                       swal("Thành công", "Xóa thành công", "success").then(function() {
                                                           window.location = "index.php";
                                                       });
+                                                      setTimeout(function() {
+                                                          window.location.href = "index.php";
+                                                      }, 1500);
                                                   ;</script>';
                                           }
                                           else
