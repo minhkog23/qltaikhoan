@@ -25,6 +25,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Main CSS-->
   <link rel="stylesheet" type="text/css" href="css/main.css">
+  <!-- <script src="js/jquery-3.2.1.min.js"></script> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
   <!-- or -->
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -130,7 +131,7 @@
   <script src="js/bootstrap.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="src/jquery.table2excel.js"></script>
-  <script src="js/main.js"></script>
+  <!-- <script src="js/main.js"></script> -->
   <!-- The javascript plugin to display page loading on top-->
   <script src="js/plugins/pace.min.js"></script>
   <!-- Page specific javascripts-->
@@ -215,6 +216,7 @@
       $("#ModalUP").modal({ backdrop: false, keyboard: false })
     });
   </script>
+  <script  src="../js/main.js"></script>
 </body>
 
 </html>

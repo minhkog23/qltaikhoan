@@ -1,15 +1,12 @@
 <?php
-    session_start();
-    if(isset($_SESSION['email']) && isset($_SESSION['matKhau']))
-    {
-      include ("../../class/login/clslogin.php");
-      $c=new login();
-      $c->confirmlogin($_SESSION['email'],$_SESSION['matKhau']);
-    }
-    else
-    {
-      header("location:../../index.php");
-    }
+session_start();
+if (isset($_SESSION['email']) && isset($_SESSION['matKhau'])) {
+  include("../../class/login/clslogin.php");
+  $c = new login();
+  $c->confirmlogin($_SESSION['email'], $_SESSION['matKhau']);
+} else {
+  header("location:../../index.php");
+}
 ?>
 <?php
 if (session_status() == PHP_SESSION_NONE) {
@@ -21,8 +18,8 @@ if (!isset($_SESSION['token'])) {
 $token = $_SESSION['token'];
 ?>
 <?php
-  include '../../class/xuLyDuLieu.php';
-  $p=new xuLyDuLieu();
+include '../../class/xuLyDuLieu.php';
+$p = new xuLyDuLieu();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -136,7 +133,7 @@ $token = $_SESSION['token'];
   <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
   <aside class="app-sidebar">
     <div class="app-sidebar__user"><a href="index.php"><img class="app-sidebar__user-avatar" src="../../main/img/login/login.jpg" width="50px"
-    alt="User Image"></a>
+          alt="User Image"></a>
       <div>
         <p class="app-sidebar__user-name"><b><?php echo $_SESSION['ten'] ?></b></p>
         <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
@@ -144,7 +141,7 @@ $token = $_SESSION['token'];
     </div>
     <hr>
     <ul class="app-menu">
-    <li><a class="app-menu__item" href="index.php"><i class='app-menu__icon bx bx-task'></i><span
+      <li><a class="app-menu__item" href="index.php"><i class='app-menu__icon bx bx-task'></i><span
             class="app-menu__label">Quản lý tài khoản</span></a></li>
       <li><a class="app-menu__item" href="quanLyDanhMuc.php"><i class='app-menu__icon bx bx-task'></i><span
             class="app-menu__label">Quản lý danh mục</span></a></li>
@@ -175,13 +172,13 @@ $token = $_SESSION['token'];
 
               <div class="form-group col-md-3 ">
                 <label for="exampleSelect1" class="control-label">Loại tài khoản <span style="color:red">*</span></label>
-                <select class="form-control" name="exampleSelect1" id="exampleSelect1">  
-                <option value="-- Chọn loại tài khoản --">-- Chọn loại tài khoản --</option>
+                <select class="form-control" name="exampleSelect1" id="exampleSelect1">
+                  <option value="-- Chọn loại tài khoản --">-- Chọn loại tài khoản --</option>
                   <?php
-                    $p->getTenLoai("SELECT id_maTK, tenLoai FROM loaitaikhoan");
+                  $p->getTenLoai("SELECT id_maTK, tenLoai FROM loaitaikhoan");
                   ?>
               </div>
-              
+
               <div class="form-group col-md-3 ">
                 <label for="exampleSelect1" class="control-label">Tên Ngân hàng</label>
                 <input readonly class="form-control" type="text" name="txttenNH" id="txttenNH" placeholder="Nhập tên ngân hàng (nếu có)">
@@ -194,34 +191,30 @@ $token = $_SESSION['token'];
                 <a class="btn btn-cancel" href="index.php">Hủy</a>
                 <input type="hidden" name="token" value="<?php echo $token; ?>">
                 <input type="reset" value="Nhập lại" class="btn btn-warning"></input>
-                <input class="btn btn-save" name="nut" value="Lưu"  type="submit"></input>
+                <input class="btn btn-save" name="nut" value="Lưu" type="submit"></input>
               </div>
               <?php
-                $id_user=$_SESSION['id_user'];
-                $id_maTK=$p->laycot("SELECT id_maTK FROM loaitaikhoan WHERE tenLoai='Tài khoản ngân hàng'");
+              $id_user = $_SESSION['id_user'];
+              $id_maTK = $p->laycot("SELECT id_maTK FROM loaitaikhoan WHERE tenLoai='Tài khoản ngân hàng'");
 
-                if(isset($_REQUEST['nut']) && $_REQUEST['nut']=="Lưu" && $_REQUEST['token'] == $token)
+              if (isset($_REQUEST['nut']) && $_REQUEST['nut'] == "Lưu" && $_REQUEST['token'] == $token) {
+                if ($_REQUEST['txtpass'] == "" || $_REQUEST['exampleSelect1'] == '-- Chọn loại tài khoản --') //$_REQUEST['exampleSelect1']=='0': 0 tức là -- chọn loại ..--
                 {
-                  if($_REQUEST['txtpass']=="" || $_REQUEST['exampleSelect1']=='-- Chọn loại tài khoản --')//$_REQUEST['exampleSelect1']=='0': 0 tức là -- chọn loại ..--
-                  {
-                    echo '<script>
+                  echo '<script>
                               swal("Thông báo", "Vui lòng nhập đầy đủ thông tin bắt buộc", "error");
                           </script>';
-                  }
-                  else
-                  {
-                    $ten=$_REQUEST['txtten'];
-                    $pass=$_REQUEST['txtpass'];
-                    $loai=$_REQUEST['exampleSelect1'];
-                    $tenNH=$_REQUEST['txttenNH'];
-                    $maPin=$_REQUEST['txtmaPin'];
-                    $sql="INSERT INTO taikhoan(taiKhoan, matKhau, tenNganHang, maPinThe, id_user, id_maTK) 
+                } else {
+                  $ten = $_REQUEST['txtten'];
+                  $pass = $_REQUEST['txtpass'];
+                  $loai = $_REQUEST['exampleSelect1'];
+                  $tenNH = $_REQUEST['txttenNH'];
+                  $maPin = $_REQUEST['txtmaPin'];
+                  $sql = "INSERT INTO taikhoan(taiKhoan, matKhau, tenNganHang, maPinThe, id_user, id_maTK) 
                                                           VALUES(?, ?, ?, ?, ?, ?)";
-                    $params = [$ten, $pass, $tenNH, $maPin, $id_user, $loai];
-                    $ketqua=$p->themxoasua($sql, $params);
-                    if($ketqua==1)
-                    {
-                      echo '<script>
+                  $params = [$ten, $pass, $tenNH, $maPin, $id_user, $loai];
+                  $ketqua = $p->themxoasua($sql, $params);
+                  if ($ketqua == 1) {
+                    echo '<script>
                           swal("Thông báo", "Thêm tài khoản thành công", "success").then(function(){
                               window.location="index.php";
                           });
@@ -229,30 +222,28 @@ $token = $_SESSION['token'];
                             window.location.href = "index.php";
                           }, 1500);
                       </script>';
-                      unset($_SESSION['token']);
-                    }
-                    else
-                    {
-                      echo '<script>
+                    unset($_SESSION['token']);
+                  } else {
+                    echo '<script>
                           swal("Thông báo", "Thêm tài khoản thất bại", "error");
                       </script>';
-                    }
                   }
                 }
-                else if(isset($_REQUEST['nut']) && $_REQUEST['nut']=="Lưu" && $_REQUEST['token'] != $token)
-                {
-                  echo '<script>
+              } else if (isset($_REQUEST['nut']) && $_REQUEST['nut'] == "Lưu" && $_REQUEST['token'] != $token) {
+                echo '<script>
                           swal("Thông báo", "Phiên làm việc đã hết hạn, vui lòng tải lại trang", "error");
                       </script>';
-                      unset($_SESSION['token']);
-                }
-              
+                unset($_SESSION['token']);
+              }
+
               ?>
             </form>
           </div>
-          
+
         </div>
   </main>
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="../js/main.js"></script>
 
 
 
@@ -264,10 +255,10 @@ $token = $_SESSION['token'];
   const maPinInput = document.getElementById('txtmaPin');
 
   // Bảo mật và tối ưu mã PHP:
-//Sử dụng htmlspecialchars() để tránh các lỗi XSS khi hiển thị dữ liệu từ cơ sở dữ liệu.
+  //Sử dụng htmlspecialchars() để tránh các lỗi XSS khi hiển thị dữ liệu từ cơ sở dữ liệu.
 
-// Xử lý sự kiện khi thay đổi giá trị
-  loaiTaiKhoanSelect.addEventListener('change', function () {
+  // Xử lý sự kiện khi thay đổi giá trị
+  loaiTaiKhoanSelect.addEventListener('change', function() {
     if (this.value === '<?php echo $p->laycot("SELECT id_maTK FROM loaitaikhoan WHERE tenLoai='Tài khoản ngân hàng'"); ?>') {
       // Nếu chọn "Tài khoản ngân hàng", kích hoạt các ô
       tenNHInput.readOnly = false;
@@ -281,4 +272,5 @@ $token = $_SESSION['token'];
     }
   });
 </script>
+
 </html>

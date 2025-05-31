@@ -1,15 +1,12 @@
 <?php
-    session_start();
-    if(isset($_SESSION['email']) && isset($_SESSION['matKhau']))
-    {
-      include ("../../class/login/clslogin.php");
-      $c=new login();
-      $c->confirmlogin($_SESSION['email'],$_SESSION['matKhau']);
-    }
-    else
-    {
-      header("location:../../index.php");
-    }
+session_start();
+if (isset($_SESSION['email']) && isset($_SESSION['matKhau'])) {
+  include("../../class/login/clslogin.php");
+  $c = new login();
+  $c->confirmlogin($_SESSION['email'], $_SESSION['matKhau']);
+} else {
+  header("location:../../index.php");
+}
 ?>
 <?php
 if (session_status() == PHP_SESSION_NONE) {
@@ -21,8 +18,8 @@ if (!isset($_SESSION['token'])) {
 $token = $_SESSION['token'];
 ?>
 <?php
-  include '../../class/xuLyDuLieu.php';
-  $p=new xuLyDuLieu();
+include '../../class/xuLyDuLieu.php';
+$p = new xuLyDuLieu();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -136,7 +133,7 @@ $token = $_SESSION['token'];
   <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
   <aside class="app-sidebar">
     <div class="app-sidebar__user"><a href="index.php"><img class="app-sidebar__user-avatar" src="../../main/img/login/login.jpg" width="50px"
-    alt="User Image"></a>
+          alt="User Image"></a>
       <div>
         <p class="app-sidebar__user-name"><b><?php echo $_SESSION['ten'] ?></b></p>
         <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
@@ -144,11 +141,11 @@ $token = $_SESSION['token'];
     </div>
     <hr>
     <ul class="app-menu">
-    <li><a class="app-menu__item" href="index.php"><i class='app-menu__icon bx bx-task'></i><span
+      <li><a class="app-menu__item" href="index.php"><i class='app-menu__icon bx bx-task'></i><span
             class="app-menu__label">Quản lý tài khoản</span></a></li>
       <li><a class="app-menu__item" href="quanLyDanhMuc.php"><i class='app-menu__icon bx bx-task'></i><span
             class="app-menu__label">Quản lý danh mục</span></a></li>
-      <li><a class="app-menu__item" href="Account.php"><i class='app-menu__icon bx bx-cog'></i><span class="app-menu__label">Account</span></a></li>      
+      <li><a class="app-menu__item" href="Account.php"><i class='app-menu__icon bx bx-cog'></i><span class="app-menu__label">Account</span></a></li>
     </ul>
   </aside>
   <main class="app-content">
@@ -177,35 +174,28 @@ $token = $_SESSION['token'];
                 <a class="btn btn-cancel" href="quanLyDanhMuc.php">Hủy</a>
                 <input type="hidden" name="token" value="<?php echo $token; ?>">
                 <input type="reset" value="Nhập lại" class="btn btn-warning"></input>
-                <input class="btn btn-save" name="nut" value="Lưu"  type="submit"></input>
+                <input class="btn btn-save" name="nut" value="Lưu" type="submit"></input>
               </div>
 
               <!-- Xử lý php -->
               <?php
-                if(isset($_REQUEST['nut']) && $_REQUEST['nut']=="Lưu" && $_REQUEST['token'] == $token)
-                {
-                  $txttenloai=$_REQUEST['txttenloai'];
-                  $txtmota=$_REQUEST['txtmota'];
-                  if($txttenloai=="")
-                  {
-                    echo '<script>
+              if (isset($_REQUEST['nut']) && $_REQUEST['nut'] == "Lưu" && $_REQUEST['token'] == $token) {
+                $txttenloai = $_REQUEST['txttenloai'];
+                $txtmota = $_REQUEST['txtmota'];
+                if ($txttenloai == "") {
+                  echo '<script>
                               swal("Thông báo", "Vui lòng nhập thông tin bắt buộc", "error");
                           </script>';
-                  }
-                  else if($p->checkTenDanhMuc("select * from loaitaikhoan where tenLoai ='$txttenloai'")==0)
-                  {
-                    echo '<script>
+                } else if ($p->checkTenDanhMuc("select * from loaitaikhoan where tenLoai ='$txttenloai'") == 0) {
+                  echo '<script>
                               swal("Thông báo", "Tên loại tài khoản đã tồn tại", "error");
                           </script>';
-                  }
-                  else
-                  {
-                    $sql = "INSERT INTO loaitaikhoan(tenLoai,moTa) VALUES(?,?)";
-                    $params =[$txttenloai, $txtmota];
-                    $ketqua=$p->themxoasua($sql, $params);
-                    if($ketqua==1)
-                    {
-                      echo '<script>
+                } else {
+                  $sql = "INSERT INTO loaitaikhoan(tenLoai,moTa) VALUES(?,?)";
+                  $params = [$txttenloai, $txtmota];
+                  $ketqua = $p->themxoasua($sql, $params);
+                  if ($ketqua == 1) {
+                    echo '<script>
                               swal("Thông báo", "Thêm danh mục mới thành công", "success").then(function(){
                               window.location="quanLyDanhMuc.php";
                               });
@@ -213,31 +203,28 @@ $token = $_SESSION['token'];
                                   window.location.href = "quanLyDanhMuc.php";
                               }, 1500);
                           </script>';
-                          unset($_SESSION['token']);
-                    }
-                    else
-                    {
-                      echo '<script>
+                    unset($_SESSION['token']);
+                  } else {
+                    echo '<script>
                                 swal("Thông báo", "Thêm tài khoản thất bại", "error");
                             </script>';
-                    }
                   }
                 }
-                else if(isset($_REQUEST['nut']) && $_REQUEST['nut']=="Lưu" && $_REQUEST['token'] != $token)
-                {
-                  echo '<script>
+              } else if (isset($_REQUEST['nut']) && $_REQUEST['nut'] == "Lưu" && $_REQUEST['token'] != $token) {
+                echo '<script>
                             swal("Thông báo", "Token không hợp lệ", "error");
                         </script>';
-                        unset($_SESSION['token']);
-                }
-              
+                unset($_SESSION['token']);
+              }
+
               ?>
             </form>
           </div>
-          
+
         </div>
   </main>
-
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="../js/main.js"></script>
 
 
 </body>

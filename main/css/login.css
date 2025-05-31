@@ -32,7 +32,7 @@ body {
   transform-origin: left;
   transform-style: preserve-3d;
   backface-visibility: hidden;
-}
+} 
 
 
 .container .cover .front,
